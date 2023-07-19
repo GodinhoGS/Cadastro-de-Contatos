@@ -1,4 +1,6 @@
-﻿using SiteMVC.Data;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using SiteMVC.Data;
 using SiteMVC.Models;
 using System;
 using System.Collections.Generic;
@@ -36,14 +38,29 @@ namespace SiteMVC.Repository
         {
             ContactModel contactDB = ListById(contact.Id);
 
-            if (contactDB == null) throw new Exception("It seems that an error has occurred in the update");
+            if (contactDB == null)
+                throw new Exception("Contact not found");
 
-            contactDB.Name = contact.Name;
-            contactDB.Email = contact.Email;
-            contactDB.Celular = contact.Celular;
+            // Validate model
+            if (string.IsNullOrEmpty(contact.Name))
+            {
+                // return error
+            }
 
-            _baseContext.Contact.Update(contactDB);
-            _baseContext.SaveChanges();
+            // Handle nulls before assigning to DB entity
+            contactDB.Name = contact.Name ?? contactDB.Name;
+            contactDB.Email = contact.Email ?? contactDB.Email;
+            contactDB.Celular = contact.Celular ?? contactDB.Celular;
+
+            try
+            {
+                _baseContext.Contact.Update(contactDB);
+                _baseContext.SaveChanges();
+            }
+            catch (SqlException ex)
+            {
+                // handle save error
+            }
 
             return contactDB;
         }
@@ -59,5 +76,6 @@ namespace SiteMVC.Repository
 
             return true;
         }
+
     }
 }

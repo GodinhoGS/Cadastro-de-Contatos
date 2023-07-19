@@ -11,6 +11,5 @@ namespace SiteMVC.Repository
         ContactModel Att(ContactModel contact);
 
         bool Delete(int id);
-
     }
 }
