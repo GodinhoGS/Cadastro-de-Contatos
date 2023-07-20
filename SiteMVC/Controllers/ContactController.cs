@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SiteMVC.Models;
 using SiteMVC.Repository;
+using System;
 using System.Collections.Generic;
 
 namespace SiteMVC.Controllers
@@ -38,27 +39,67 @@ namespace SiteMVC.Controllers
 
         public IActionResult Delete(int id)
         {
-            _contactRepository.Delete(id);
-            return RedirectToAction("Index");
+            try
+            {
+                bool deleted = _contactRepository.Delete(id);
+
+                if (deleted) 
+                {
+                    TempData["SuccessMessage"] = "Contact successfully deleted!";
+                    
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Oops, we were unable to delete your contact!";
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception error)
+            {
+                TempData["ErrorMessage"] = $"Oops, we were unable to update your contact, try again, error detail: {error.Message}";
+                return RedirectToAction("Index");
+                throw;
+            }
         }
 
         [HttpPost]
         public IActionResult Change(ContactModel contact)
         {
+            try
+            {
                 _contactRepository.Att(contact);
-                return RedirectToAction("Index");      
+                TempData["SuccessMessage"] = "Contact successfully updated";
+                return RedirectToAction("Index");
+            }
+            catch (Exception error)
+            {
+                TempData["ErrorMessage"] = $"Oops, we were unable to update your contact, try again, error detail: {error.Message}";
+                return RedirectToAction("Index");
+                throw;
+            }      
         }
 
         [HttpPost]
         public IActionResult Create(ContactModel contact)
         {
-            if(ModelState.IsValid)
+            try
             {
-                _contactRepository.Add(contact);
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    _contactRepository.Add(contact);
+                    TempData["SuccessMessage"] = "Contact successfully created";
+                    return RedirectToAction("Index");
+                }
 
-            return View(contact);
+                return View(contact);
+            }
+            catch (Exception error)
+            {
+                TempData["ErrorMessage"] = $"Oops, we were unable to register your contact, try again, error detail: {error.Message}";
+                return RedirectToAction("Index");
+                throw;
+            }
         }
     }
 }

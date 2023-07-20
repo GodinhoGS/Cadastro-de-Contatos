@@ -51,13 +51,12 @@ namespace SiteMVC.Repository
             contactDB.Name = contact.Name ?? contactDB.Name;
             contactDB.Email = contact.Email ?? contactDB.Email;
             contactDB.Celular = contact.Celular ?? contactDB.Celular;
-
             try
             {
                 _baseContext.Contact.Update(contactDB);
                 _baseContext.SaveChanges();
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
                 // handle save error
             }
