@@ -1,11 +1,10 @@
 ﻿using SiteMVC.Enums;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SiteMVC.Models
 {
-    public class UserModel
+    public class NoPassUserModel
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Type the user Name")]
@@ -17,14 +16,5 @@ namespace SiteMVC.Models
         public string Email { get; set; }
         [Required(ErrorMessage = "Select the profile type!")]
         public ProfileEnum? Profile { get; set; }
-        [Required(ErrorMessage = "Type the user Password!")]
-        public string Password { get; set; }
-        public DateTime RegisterDate { get; set; }
-        public DateTime? UpdateDate { get; set; }
-
-        public bool ValidPassword(string password)
-        {
-            return Password == password;
-        } 
     }
 }

@@ -11,9 +11,15 @@ namespace SiteMVC.Repository
     public class UserRepository : IUserRepository
     {
         private readonly BaseContext _baseContext;
+
         public UserRepository(BaseContext baseContext)
         {
             this._baseContext = baseContext;
+        }
+
+        public UserModel GetByLogin(string login)
+        {
+            return _baseContext.Users.FirstOrDefault(x => x.Login.ToUpper() == login.ToUpper());
         }
 
         public UserModel ListById(int id)
@@ -78,6 +84,5 @@ namespace SiteMVC.Repository
 
             return true;
         }
-
     }
 }

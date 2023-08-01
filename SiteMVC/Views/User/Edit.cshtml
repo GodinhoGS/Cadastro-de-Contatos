@@ -1,17 +1,17 @@
 ﻿@using SiteMVC.Enums;
 @model UserModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
 <div class="text-center">
 
-    <h1 class="display-4 font-weight-bold">User Registry</h1>
+    <h1 class="display-4 font-weight-bold">Edit the User Registry</h1>
 
 
 </div>
 
-<form asp-controller="User" asp-action="Create" method="post">
+<form asp-controller="User" asp-action="Change" method="post" asp-route-id="@Model.Id">
 
   <div class="form-group">
     <label for="name">Name</label>
@@ -41,13 +41,7 @@
         @Html.ValidationMessageFor(x => x.Profile)
   </div>
 
-  <div class="form-group">
-    <label for="name">Password</label>
-    <input type="password" asp-for="Password" class="form-control" placeholder="Type the user Password!">
-        @Html.ValidationMessageFor(x => x.Password)
-  </div>
-
-  <button type="submit" class="btn btn-primary btn-block">Add User</button>
+  <button type="submit" class="btn btn-primary btn-block">Edit</button>
   <a class="btn btn-secondary btn-block" asp-controller="User" asp-action="Index" role="button">Return</a>
 
 </form>
