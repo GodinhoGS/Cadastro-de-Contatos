@@ -14,9 +14,12 @@
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Contact" asp-action="Index">Contacts</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
-            </li>
+            @if (Model.Profile == SiteMVC.Enums.ProfileEnum.Admin)
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
+                </li>
+            }
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Leave">Quit</a>
             </li>

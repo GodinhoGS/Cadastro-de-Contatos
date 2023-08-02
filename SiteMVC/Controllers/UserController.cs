@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SiteMVC.Filters;
 using SiteMVC.Models;
 using SiteMVC.Repository;
 using System;
@@ -7,6 +8,7 @@ using System.Xml.Linq;
 
 namespace SiteMVC.Controllers
 {
+    [OnlyAdminRestrictPage]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;

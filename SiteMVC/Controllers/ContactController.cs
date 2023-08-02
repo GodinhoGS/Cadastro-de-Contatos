@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SiteMVC.Filters;
 using SiteMVC.Models;
 using SiteMVC.Repository;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 
 namespace SiteMVC.Controllers
 {
+    [LoggedUserPage]
     public class ContactController : Controller
     {
         private readonly IContactRepository _contactRepository;
