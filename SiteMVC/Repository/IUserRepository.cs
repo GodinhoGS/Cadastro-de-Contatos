@@ -5,6 +5,7 @@ namespace SiteMVC.Repository
 {
     public interface IUserRepository
     {
+        UserModel GetByMailnLogin(string email, string login);
         UserModel GetByLogin(string login);
         List<UserModel> GetAll();
         UserModel ListById(int id);

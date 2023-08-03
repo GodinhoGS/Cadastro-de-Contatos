@@ -1,4 +1,5 @@
 ﻿using SiteMVC.Enums;
+using SiteMVC.Helper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +25,19 @@ namespace SiteMVC.Models
 
         public bool ValidPassword(string password)
         {
-            return Password == password;
+            return Password == password.HashGenerator();
         } 
+
+        public void SetHashPassword()
+        {
+            Password = Password.HashGenerator();
+        }
+
+        public string NewPassGenerator()
+        {
+            string newPassword = Guid.NewGuid().ToString().Substring(0, 8);
+            Password = newPassword.HashGenerator();
+            return newPassword;
+        }
     }
 }

@@ -17,6 +17,11 @@ namespace SiteMVC.Repository
             this._baseContext = baseContext;
         }
 
+        public UserModel GetByMailnLogin(string email, string login)
+        {
+            return _baseContext.Users.FirstOrDefault(x => x.Login.ToUpper() == login.ToUpper() && x.Email.ToUpper() == email.ToUpper());
+        }
+
         public UserModel GetByLogin(string login)
         {
             return _baseContext.Users.FirstOrDefault(x => x.Login.ToUpper() == login.ToUpper());
@@ -35,6 +40,7 @@ namespace SiteMVC.Repository
 
         public UserModel Add(UserModel user)
         {
+            user.SetHashPassword();
             user.RegisterDate = DateTime.Now;
             _baseContext.Users.Add(user);
             _baseContext.SaveChanges();
